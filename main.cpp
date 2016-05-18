@@ -2,6 +2,7 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
+#define PIN_T1      5 //counter1 pin
 #define PIN_IDLE    0
 #define PIN_DATA    1
 #define PIN_CLK     2
@@ -40,8 +41,10 @@ ISR(TIMER0_OVF_vect,ISR_BLOCK)
 
 int main()
     {
+    DDRD = 0;
     DDRB = 0xFF;
     DDRC = 0xFF;
+    PORTD = _BV( PIN_T1 );
     for (int i = 0; i < 11; ++i)
         {
         bar( i );
