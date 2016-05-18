@@ -1,6 +1,7 @@
 #include <avr/io.h>
-#include <util/delay.h>
+#include <avr/sleep.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
 
 #define PIN_T1      5 //counter1 pin
 #define PIN_IDLE    0
@@ -54,6 +55,9 @@ ISR(TIMER0_OVF_vect,ISR_BLOCK)
 
 int main()
     {
+    set_sleep_mode( SLEEP_MODE_IDLE );
+    sleep_enable();
+
     DDRD = 0;
     DDRB = 0xFF;
     DDRC = 0xFF;
@@ -72,8 +76,7 @@ int main()
     TIMSK |= _BV(TOIE0); //overflow interrupt
     sei();
     for (;;)
-        {
-        }
+        sleep_cpu();
 
     return 0;
     }
